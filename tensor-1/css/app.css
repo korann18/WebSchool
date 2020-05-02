@@ -1,0 +1,78 @@
+body {
+    text-align: center;
+    font-size: 18px;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+.wrapper {
+    max-width: 980px;
+    margin: 0 auto;
+    width: 900px;
+}
+
+.header {
+    margin: 40px 0px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.logo_pic {
+    height: 30px;
+    margin-right: 8px;
+}
+
+.logo_name{
+    text-transform: uppercase;
+}
+
+.logo:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 50px;
+    height: 2px;
+    background: black;
+    margin: auto;
+    bottom: 0;
+}
+
+.header_description {
+    text-align: center;
+}
+
+.student-card_avatar {
+    height:200px;
+    width: 200px;
+    object-fit: cover;
+    display: block;
+    margin: 20px auto;
+    border-radius: 50%;
+}
+
+.student-card_name {
+    display: block;
+    font-size: 20px;
+    text-align: center;
+    color: black;
+}
+
+.student-card_uni-description {
+    display: block;
+    font-size: 15px;
+    text-align: center;
+    color: gray;
+}
+
+.wrapper--row3 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wrapper--row3 > * {
+    width: 33%;
+}
