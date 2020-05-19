@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tensor School</title>
+    <link href="css/app.css" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="logo header_logo">
+            <img alt="Логотип компании Тензор" class="logo_pic" src="img/ava01.png">
+            <p class="logo_name">Tensor School</p>
+        </div>
+        <p class="header_description">Это страницы школы Тензор</p>
+    </header>
+    <div class="wrapper wrapper--row3" id="students">
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    const studentArr = [
+        {
+            fullName: 'Маша Иванова',
+            university: 'УГАТУ',
+            course: 2,
+            birthDate: new Date(2000, 0, 1),
+            photoUrl: 'img/ava01.png'
+        },
+        {
+            fullName: 'Миша Иванов',
+            university: 'БГУ',
+            course: 3,
+            birthDate: new Date(1999, 0, 1),
+            photoUrl: 'img/ava02.png'
+        },
+        {
+            fullName: 'Миша Иванов',
+            university: 'БГУ',
+            course: 3,
+            birthDate: new Date(1999, 0, 1),
+            photoUrl: 'img/ava02.png'
+        }
+    ];
+
+    MONTHES = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля',
+        'августа', 'сенятбря', 'октября', 'ноября', 'декабря'];
+
+    class Student {
+        constructor(params) {
+            this.fullName = params.fullName;
+            this.university = params.university;
+            this.course = params.course;
+            this.birthDate = params.birthDate;
+            this.photoUrl = params.photoUrl;
+        };
+
+        get birthDateStr() {
+            return `${this.birthDate.getDate()} ${MONTHES[this.birthDate.getMonth()]}`;
+        };
+
+        get age() {
+            let now = new Date();
+            let c = 0;
+            if (now.getMonth() > this.birthDate.getMonth() ||
+                (now.getMonth() === this.birthDate.getMonth() && now.getDate() > this.birthDate.getDate())) {
+                c = 1;
+            }
+            let n = now.getFullYear() - this.birthDate.getFullYear() + c, m;
+            if (n % 10 === 1)
+                m = 'год';
+            else if (n % 10 > 1 && n % 10 < 5)
+                m = 'года';
+            else
+                m = 'лет';
+            return `${n} ${m}`;
+        };
+    }
+
+    function appendStudentBlock(student) {
+        let container = document.querySelector('#students');
+        container.insertAdjacentHTML("beforeend", `
+    <div>
+         <div class="student-card_popup popup-card">
+                    <div class="popup-card_wrapper">
+                        <p class="popup-card_close">x</p>
+                        <div class="popup-card_text">
+                            <p class="popup-card_name">${student.fullName}</p>
+                            <div class="popup-card_info">
+                                <p class="popup-card_label">День рождения</p>
+                                <p class="popup-card_value">${student.birthDateStr}, ${student.age}</p>
+                            </div>
+                            <div class="popup-card_info">
+                                <p class="popup-card_label">Учится</p>
+                                <p class="popup-card_value">${student.university}, ${student.course} курс</p>
+                            </div>
+                        </div>
+                        <img alt="Аватар" class="popup-card_avatar" src="${student.photoUrl}"/>
+                    </div>
+                </div>
+        <div class="student-card">
+            <img alt="Автар" class="student-card_avatar" src="${student.photoUrl}"/>
+            <p class="student-card_name">${student.fullName}</p>
+            <p class="student-card_uni-description">${student.university}<br/>${student.course} курс</p>
+        </div>
+</div>`);
+        return container.lastElementChild;
+    }
+
+    function openCard(student, currentTarget) {
+        let popup = currentTarget.querySelector('.student-card_popup');
+        popup.style.display = 'block';
+        let close = currentTarget.querySelector('.popup-card_close');
+        close.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+    }
+
+    studentArr.forEach((item) => {
+        const student = new Student(item);
+        const studentBlock = appendStudentBlock(student);
+        studentBlock.querySelector('.student-card').addEventListener('click', (event) => {
+            openCard(student, studentBlock);
+        });
+    });
+
+</script>

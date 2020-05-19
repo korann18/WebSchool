@@ -1,0 +1,142 @@
+body {
+    text-align: center;
+    font-size: 18px;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+.wrapper {
+    max-width: 980px;
+    margin: 0 auto;
+    width: 900px;
+}
+
+.header {
+    margin: 40px 0px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.logo_pic {
+    height: 30px;
+    margin-right: 8px;
+}
+
+.logo_name{
+    text-transform: uppercase;
+}
+
+.logo:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 50px;
+    height: 2px;
+    background: black;
+    margin: auto;
+    bottom: 0;
+}
+
+.header_description {
+    text-align: center;
+}
+
+.student-card_avatar {
+    height:200px;
+    width: 200px;
+    object-fit: cover;
+    display: block;
+    margin: 20px auto;
+    border-radius: 50%;
+}
+
+.student-card_name {
+    display: block;
+    font-size: 20px;
+    text-align: center;
+    color: black;
+}
+
+.student-card_uni-description {
+    display: block;
+    font-size: 15px;
+    text-align: center;
+    color: gray;
+}
+
+.wrapper--row3 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wrapper--row3 > * {
+    width: 33%;
+}
+.popup-card{
+    background: white;
+    border-radius: 10%;
+    display: flex;
+}
+
+.popup-card_avatar {
+    height:100px;
+    width: 100px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 5px;
+    margin-top: auto;
+    margin-right: 5px;
+    border-radius: 25%;
+}
+
+.popup-card_name {
+    font-size: 20px;
+    color: black;
+    padding-left: 5px;
+}
+
+.popup-card_label{
+    text-align: left;
+    color: lightgray;
+    font-size: 10px;
+    margin-left: 10px;
+}
+
+.popup-card_value{
+    font-size: 10px;
+    color: black;
+    margin-left: 5px;
+}
+
+.popup-card_wrapper{
+    padding-right: 32px;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    display: flex;
+}
+
+.popup-card_close{
+    color: gray;
+    margin: 0;
+    top: 0;
+    right: 10px;
+    position: absolute;
+}
+
+.popup-card_info {
+    display: flex;
+}
+
+.student-card{
+    position: relative;
+}
+
+.student-card_popup{
+    display: none;
+    position: absolute;
+    z-index: 10;
+}
