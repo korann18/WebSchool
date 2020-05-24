@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tensor School</title>
+    <link href="css/app.css" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="logo header_logo">
+            <img alt="Логотип компании Тензор" class="logo_pic" src="img/logo.jpg">
+            <p class="logo_name">Tensor School</p>
+        </div>
+        <p class="header_description">Это страницы школы Тензор</p>
+    </header>
+    <div class="wrapper wrapper--row3" id="students">
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    MONTHES = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля',
+        'августа', 'сенятбря', 'октября', 'ноября', 'декабря'];
+
+    class Factory {
+        create(fullName, type) {
+            switch (type) {
+                case 'student':
+                    return new Student({fullName, photoUrl: 'imd/ava01.png', birthDate: '', university: '', course: ''});
+                case 'teacher':
+                    return new Teacher({fullName, photoUrl: 'imd/ava02.png', post: ''});
+                default:
+                    return new Person({name});
+            }
+        }
+    }
+
+    class School {
+        constructor() {
+            this.factory = new Factory();
+            this.personsArr = [];
+        }
+
+        getStudents() {
+            return this.personsArr.filter((person) => person.type === 'student');
+        }
+
+        create(fullName1, type1) {
+            this.personsArr.push(this.factory.create(fullName1, type1));
+        }
+
+        deleteStudent(fullName) {
+            this.personsArr = this.personsArr.filter((person) => ((person.type === 'student' && person.fullName !== fullName)
+                || person.type === 'teacher'));
+        }
+
+        getStudent(fullName) {
+            return this.personsArr.find((person) => (person.type === 'student' && person.fullName === fullName));
+        }
+    }
+
+
+    class Person {
+        constructor(fullName, photoUrl) {
+            this.fullName = fullName;
+            this.photoUrl = photoUrl;
+            this.type = 'person';
+        }
+    }
+
+    class Teacher extends Person {
+        constructor(fullName, photoUrl, post) {
+            super(fullName, photoUrl);
+            this.post = post;
+            this.type = 'teacher';
+        }
+    }
+
+    class Student extends Person {
+        constructor(params) {
+            super(params.fullName, params.photoUrl);
+            this.birthDate = params.birthDate;
+            this.university = params.university;
+            this.course = params.course;
+            this.type = 'student';
+
+        };
+
+        static get birthDateStr() {
+            return `${this.birthDate.getDate()} ${MONTHES[this.birthDate.getMonth()]}`;
+        };
+
+        static get age() {
+            let now = new Date();
+            let c = 0;
+            if (now.getMonth() > this.birthDate.getMonth() ||
+                (now.getMonth() === this.birthDate.getMonth() && now.getDate() > this.birthDate.getDate())) {
+                c = 1;
+            }
+            let n = now.getFullYear() - this.birthDate.getFullYear() + c, m;
+            if (n % 10 === 1)
+                m = 'год';
+            else if (n % 10 > 1 && n % 10 < 5)
+                m = 'года';
+            else
+                m = 'лет';
+            return `${n} ${m}`;
+        };
+    }
+
+    let school = new School();
+    school.create('student', 'student');
+
+    function appendStudentBlock(student) {
+        let container = document.querySelector('#students');
+        container.insertAdjacentHTML("beforeend", `
+    <div>
+         <div class="student-card_popup popup-card">
+                    <div class="popup-card_wrapper">
+                        <p class="popup-card_close">x</p>
+                        <div class="popup-card_text">
+                            <p class="popup-card_name">${student.fullName}</p>
+                            <div class="popup-card_info">
+                                <p class="popup-card_label">День рождения</p>
+                                <p class="popup-card_value">${student.birthDateStr}, ${student.age}</p>
+                            </div>
+                            <div class="popup-card_info">
+                                <p class="popup-card_label">Учится</p>
+                                <p class="popup-card_value">${student.university}, ${student.course} курс</p>
+                            </div>
+                        </div>
+                        <img alt="Аватар" class="popup-card_avatar" src="${student.photoUrl}"/>
+                    </div>
+                </div>
+        <div class="student-card">
+            <img alt="Автар" class="student-card_avatar" src="${student.photoUrl}"/>
+            <p class="student-card_name">${student.fullName}</p>
+            <p class="student-card_uni-description">${student.university}<br/>${student.course} курс</p>
+        </div>
+</div>`);
+        return container.lastElementChild;
+    }
+
+    function openCard(student, currentTarget) {
+        let popup = currentTarget.querySelector('.student-card_popup');
+        popup.style.display = 'block';
+        let close = currentTarget.querySelector('.popup-card_close');
+        close.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+    }
+
+    school.getStudents().forEach((item) => {
+        const student = new Student(item);
+        const studentBlock = appendStudentBlock(student);
+        studentBlock.querySelector('.student-card').addEventListener('click', (event) => {
+            openCard(student, studentBlock);
+        });
+    });
+
+</script>
